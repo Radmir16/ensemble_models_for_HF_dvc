@@ -1,0 +1,24 @@
+# train_params
+model_mel_notmel:
+  arch: microsoft/swinv2-tiny-patch4-window16-256
+  label_map: {MEL: 0, NOTMEL: 1}
+  train:
+    epochs: 1
+    batch_size: 16
+  dataset:
+    name: ISIC2019mel_nv
+  metrics:
+  - accuracy
+  - F1score
+
+model_mel_nv:
+  arch: sanali209/nsfwfilter
+  label_map: {MEL: 0, NOTMEL: 1, NV: 2}
+  train:
+    epochs: 1
+    batch_size: 16
+  dataset:
+    name: ISIC2019mel_nv
+  metrics:
+  - accuracy
+  - F1score

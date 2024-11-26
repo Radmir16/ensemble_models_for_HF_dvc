@@ -1,0 +1,63 @@
+stages:
+  preprocess:
+    cmd: python3 src/preprocess.py --input_dir data/raw/classification/isic2019_train
+      --output_dir data/preprocessed --csv_path data/raw/classification/ans_isic.csv
+    deps:
+    - src/preprocess.py
+    - data/raw/classification/isic2019_train
+    outs:
+    - data/preprocessed
+    # train model
+  train:
+    cmd: python3 src/train.py --data_path data/preprocessed --output_path models --params_file
+      params.yaml
+    deps:
+    - src/train.py
+    - data/preprocessed
+    outs:
+    - models/model_mel_notmel.pkl
+    - models/model_mel_nv.pkl
+    params:
+    - model_mel_notmel.arch
+    - model_mel_nv.arch
+    - model_mel_notmel.train.epochs
+    - model_mel_nv.train.epochs
+    - model_mel_notmel.train.batch_size
+    - model_mel_nv.train.batch_size
+    - model_mel_notmel.metrics
+    - model_mel_nv.metrics
+
+  eval:
+    cmd: python3 src/eval.py --data_path data/preprocessed --model_path models/ --params_file
+      params.yaml
+    deps:
+    - src/eval.py
+    - data/preprocessed
+    - models/model_mel_notmel.pkl
+    - models/model_mel_nv.pkl
+    params:
+    - model_mel_notmel.train.batch_size
+    - model_mel_nv.train.batch_size
+    - model_mel_notmel.metrics
+    - model_mel_nv.metrics
+metrics:
+- dvcpreproc/metrics.json
+- dvclive/metrics.json
+- dvctrain/metrics.json
+- dvceval/metrics.json
+plots:
+- dvcpreproc/plots/metrics:
+    x: step
+- dvclive/plots/metrics:
+    x: step
+- dvctrain/plots/metrics:
+    x: step
+- dvceval/plots/metrics:
+    x: step
+params:
+- params.yaml
+- dvclive/params.yaml
+- dvctrain/params.yaml
+artifacts:
+  classification_report:
+    path: classification_report.json
