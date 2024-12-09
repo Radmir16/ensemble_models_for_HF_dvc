@@ -1,10 +1,10 @@
 stages:
   preprocess:
-    cmd: python3 src/preprocess.py --input_dir data/raw/classification/isic2019_train
-      --output_dir data/preprocessed --csv_path data/raw/classification/ans_isic.csv
+    cmd: python3 src/preprocess.py --input_dir data/raw/isic2019_train
+      --output_dir data/preprocessed --csv_path data/raw/ans_isic.csv
     deps:
     - src/preprocess.py
-    - data/raw/classification/isic2019_train
+    - data/raw/isic2019_train
     outs:
     - data/preprocessed
     # train model
