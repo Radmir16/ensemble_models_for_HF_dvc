@@ -1,4 +1,13 @@
 stages:
+    preprocesscsv:
+    cmd: python3 src/preprocesscsv.py --input_csv data/raw/ISIC_2019_Training_GroundTruth.csv
+      --output_csv data/raw/ans_isic.csv
+    deps:
+    - src/preprocesscsv.py
+    - data/raw/ISIC_2019_Training_GroundTruth.csv
+    outs:
+    - data/raw/ans_isic.csv
+
   preprocess:
     cmd: python3 src/preprocess.py --input_dir data/raw/isic2019_train
       --output_dir data/preprocessed --csv_path data/raw/ans_isic.csv
