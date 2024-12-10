@@ -33,3 +33,7 @@ The dvc.yaml file represents the experiment pipeline.
 Before conducting the experiment, it is necessary to upload the ISIC 2019 dataset and .csv file to the data/raw directory
 The command to download linux ```wget https://isic-challenge-data.s3.amazonaws.com/2019/ISIC_2019_Training_Input.zip``` ```wget https://isic-challenge-data.s3.amazonaws.com/2019/ISIC_2019_Training_GroundTruth.csv```
 
+To start the experiment, run the command in the console:
+```
+dvc exp run -n name_exp
+```
